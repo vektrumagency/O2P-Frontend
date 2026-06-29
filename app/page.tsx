@@ -61,7 +61,7 @@ type HomepageData = {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden" style={{ height: '70vh', backgroundColor: '#ffffff' }}>
+    <section className="relative overflow-hidden h-[70vh] md:h-screen" style={{ backgroundColor: '#ffffff' }}>
       {/* Título */}
       <h1
         className="absolute top-0 left-0 right-0 z-10 text-center whitespace-nowrap leading-none select-none"
@@ -76,7 +76,7 @@ function Hero() {
       </h1>
 
       {/* Imagem */}
-      <div className="absolute left-[5vw] right-[5vw] overflow-hidden hero-img top-[3vh] bottom-[3vh]">
+      <div className="absolute left-[5vw] right-[5vw] overflow-hidden hero-img top-[3vh] bottom-[3vh] md:top-[clamp(80px,14vw,220px)] md:bottom-0">
         <Image
           src="/hero.png"
           alt="Festa Order2Party"

@@ -50,8 +50,8 @@ export function CartSidebar() {
       >
         {/* Header */}
         <div
-          className="flex items-center justify-between flex-shrink-0"
-          style={{ paddingTop: '64px', paddingLeft: '148px', paddingRight: '40px', paddingBottom: '20px' }}
+          className="cart-pad-h flex items-center justify-between flex-shrink-0"
+          style={{ paddingTop: '64px', paddingBottom: '20px' }}
         >
           <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: '2.2rem', lineHeight: 1 }}>
             Carrinho {count > 0 && <span style={{ fontSize: '1.2rem', opacity: 0.45 }}>({count})</span>}
@@ -65,7 +65,7 @@ export function CartSidebar() {
         </div>
 
         {/* Items */}
-        <div className="flex-1 overflow-y-auto" style={{ paddingLeft: '80px', paddingRight: '40px' }}>
+        <div className="cart-pad-items flex-1 overflow-y-auto">
           {items.length === 0 && (
             <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, opacity: 0.45, fontSize: '0.95rem' }}>
               O teu carrinho está vazio.
@@ -104,7 +104,7 @@ export function CartSidebar() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="flex-shrink-0" style={{ paddingLeft: '148px', paddingRight: '40px', paddingTop: '20px', paddingBottom: '64px', borderTop: '1px solid rgba(0,0,0,0.1)' }}>
+          <div className="cart-pad-footer flex-shrink-0" style={{ paddingTop: '20px', paddingBottom: '64px', borderTop: '1px solid rgba(0,0,0,0.1)' }}>
             <div className="flex justify-between items-center mb-5">
               <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '1rem' }}>Total</p>
               <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1.1rem' }}>{total}</p>

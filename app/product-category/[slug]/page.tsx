@@ -8,6 +8,7 @@ import { SiteNav } from '@/app/components/SiteNav'
 import { Footer } from '@/app/components/Footer'
 import { BackButton } from '@/app/components/BackButton'
 import { SortSelect } from '@/app/components/SortSelect'
+import { CategorySidebar } from '@/app/components/CategorySidebar'
 
 const PRODUCTS_PER_PAGE = 24
 
@@ -92,46 +93,58 @@ function getPageRange(current: number, total: number): (number | '…')[] {
 function Pagination({ page, totalPages, sort }: { page: number; totalPages: number; sort: string }) {
   if (totalPages <= 1) return null
   const range = getPageRange(page, totalPages)
+  const btnStyle = { fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem', padding: '8px 16px', borderRadius: '999px', border: '1.5px solid rgba(0,0,0,0.12)' }
+
   return (
-    <div className="flex items-center justify-center gap-1 mt-14 pt-8" style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
-      {page > 1 ? (
-        <Link href={pageUrl(page - 1, sort)} className="hover:opacity-50 transition-opacity"
-          style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem', padding: '8px 14px', borderRadius: '999px', border: '1.5px solid rgba(0,0,0,0.12)' }}>
-          ←
-        </Link>
-      ) : (
-        <span style={{ padding: '8px 14px', opacity: 0.2, fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem' }}>←</span>
-      )}
-
-      {range.map((r, i) =>
-        r === '…' ? (
-          <span key={`ellipsis-${i}`} style={{ padding: '8px 6px', opacity: 0.3, fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem' }}>…</span>
+    <div className="mt-14 pt-8" style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+      {/* Mobile: só anterior / página X de Y / seguinte */}
+      <div className="flex items-center justify-between md:hidden gap-3">
+        {page > 1 ? (
+          <Link href={pageUrl(page - 1, sort)} style={btnStyle} className="hover:opacity-50 transition-opacity">← Anterior</Link>
         ) : (
-          <Link
-            key={r}
-            href={pageUrl(r, sort)}
-            style={{
-              fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem',
-              padding: '8px 14px', borderRadius: '999px', minWidth: 38, textAlign: 'center',
-              backgroundColor: r === page ? '#0a0a0a' : 'transparent',
-              color: r === page ? '#fff' : 'inherit',
-              border: r === page ? 'none' : '1.5px solid rgba(0,0,0,0.12)',
-            }}
-            className="hover:opacity-70 transition-opacity"
-          >
-            {r}
-          </Link>
-        )
-      )}
+          <span style={{ ...btnStyle, opacity: 0.2 }}>← Anterior</span>
+        )}
+        <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.82rem', opacity: 0.4 }}>
+          {page} / {totalPages}
+        </span>
+        {page < totalPages ? (
+          <Link href={pageUrl(page + 1, sort)} style={btnStyle} className="hover:opacity-50 transition-opacity">Seguinte →</Link>
+        ) : (
+          <span style={{ ...btnStyle, opacity: 0.2 }}>Seguinte →</span>
+        )}
+      </div>
 
-      {page < totalPages ? (
-        <Link href={pageUrl(page + 1, sort)} className="hover:opacity-50 transition-opacity"
-          style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem', padding: '8px 14px', borderRadius: '999px', border: '1.5px solid rgba(0,0,0,0.12)' }}>
-          →
-        </Link>
-      ) : (
-        <span style={{ padding: '8px 14px', opacity: 0.2, fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem' }}>→</span>
-      )}
+      {/* Desktop: números de página */}
+      <div className="hidden md:flex items-center justify-center gap-1">
+        {page > 1 ? (
+          <Link href={pageUrl(page - 1, sort)} style={btnStyle} className="hover:opacity-50 transition-opacity">←</Link>
+        ) : (
+          <span style={{ ...btnStyle, opacity: 0.2 }}>←</span>
+        )}
+        {range.map((r, i) =>
+          r === '…' ? (
+            <span key={`ellipsis-${i}`} style={{ padding: '8px 6px', opacity: 0.3, fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem' }}>…</span>
+          ) : (
+            <Link key={r} href={pageUrl(r, sort)}
+              style={{
+                fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem',
+                padding: '8px 14px', borderRadius: '999px', minWidth: 38, textAlign: 'center',
+                backgroundColor: r === page ? '#0a0a0a' : 'transparent',
+                color: r === page ? '#fff' : 'inherit',
+                border: r === page ? 'none' : '1.5px solid rgba(0,0,0,0.12)',
+              }}
+              className="hover:opacity-70 transition-opacity"
+            >
+              {r}
+            </Link>
+          )
+        )}
+        {page < totalPages ? (
+          <Link href={pageUrl(page + 1, sort)} style={btnStyle} className="hover:opacity-50 transition-opacity">→</Link>
+        ) : (
+          <span style={{ ...btnStyle, opacity: 0.2 }}>→</span>
+        )}
+      </div>
     </div>
   )
 }
@@ -224,7 +237,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
         <div style={{ width: '90vw', margin: '0 auto', paddingTop: '40px', paddingBottom: '80px' }}>
           <BackButton />
 
-          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(40px, 7vw, 108px)', lineHeight: 1, marginBottom: '8px' }}>
+          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(28px, 7vw, 108px)', lineHeight: 1, marginBottom: '8px', wordBreak: 'break-word' }}>
             {productCategory.name}
           </h1>
           {productCategory.count > 0 && (
@@ -273,25 +286,15 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
             {/* Grelha de produtos */}
             <div className="flex-1 min-w-0">
-              {/* Mobile: subcategorias em pills */}
-              {sidebarItems.length > 0 && (
-                <div className="md:hidden flex flex-wrap gap-2 mb-6">
-                  {sidebarItems.map(item => (
-                    <Link key={item.slug} href={`/product-category/${item.slug}`}
-                      style={{
-                        backgroundColor: item.slug === slug ? '#0a0a0a' : '#f2f2f0',
-                        color: item.slug === slug ? '#fff' : undefined,
-                        borderRadius: '999px', padding: '6px 14px',
-                        fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.8rem',
-                      }}>
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-
-              {/* Sort */}
-              <div className="flex justify-end mb-6">
+              {/* Mobile: categorias + ordenar empilhados */}
+              <div className="flex flex-col gap-2 mb-6 md:flex-row md:justify-end md:items-center">
+                <CategorySidebar
+                  items={sidebarItems}
+                  currentSlug={slug}
+                  parentName={sidebarParent?.name}
+                  parentSlug={sidebarParent?.slug}
+                  label={sidebarParent ? 'Subcategorias' : 'Categorias'}
+                />
                 <Suspense>
                   <SortSelect current={sort} />
                 </Suspense>

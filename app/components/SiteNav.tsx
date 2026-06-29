@@ -102,7 +102,7 @@ export function SiteNav({ categories, alwaysVisible = false }: { categories: Cat
         </div>
 
         {/* ── Mobile bar ── */}
-        <div className="flex md:hidden items-center justify-between px-5 py-4">
+        <div className="flex md:hidden items-center justify-between px-5 py-4 overflow-hidden">
           <Link href="/" className="transition-all duration-300 select-none hover:opacity-70" style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.4rem', opacity: navVisible || mobileOpen ? 1 : 0, transform: navVisible || mobileOpen ? 'translateY(0)' : 'translateY(-4px)', color: '#5BB5C4' }}>
             order2party
           </Link>

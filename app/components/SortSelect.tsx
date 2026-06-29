@@ -3,12 +3,12 @@
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 
 const OPTIONS = [
-  { value: 'popularity',  label: 'Ordenar por popularidade' },
-  { value: 'rating',      label: 'Ordenar por média de classificação' },
-  { value: 'date-desc',   label: 'Ordenar por mais recentes' },
-  { value: 'price-asc',   label: 'Ordenar por preço: menor para maior' },
-  { value: 'price-desc',  label: 'Ordenar por preço: maior para menor' },
-  { value: 'stock',       label: 'Ordenar por stock' },
+  { value: 'popularity',  label: 'Popularidade' },
+  { value: 'rating',      label: 'Classificação' },
+  { value: 'date-desc',   label: 'Mais recentes' },
+  { value: 'price-asc',   label: 'Preço: ↑' },
+  { value: 'price-desc',  label: 'Preço: ↓' },
+  { value: 'stock',       label: 'Stock' },
 ]
 
 export function SortSelect({ current }: { current: string }) {
@@ -23,30 +23,25 @@ export function SortSelect({ current }: { current: string }) {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <span
-        className="uppercase"
-        style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.08em', opacity: 0.4 }}
-      >
-        Ordenar
-      </span>
+    <div className="flex items-center w-full md:w-auto">
       <select
+        className="w-full md:w-auto"
         value={current}
         onChange={e => handleChange(e.target.value)}
         style={{
           fontFamily: 'var(--font-fraktion-sans)',
           fontWeight: 700,
-          fontSize: '0.85rem',
+          fontSize: '0.88rem',
           border: '1.5px solid rgba(0,0,0,0.15)',
           borderRadius: '999px',
-          padding: '5px 12px',
+          padding: '10px 36px 10px 14px',
           backgroundColor: 'transparent',
+          maxWidth: '100%',
           cursor: 'pointer',
           appearance: 'none',
-          paddingRight: '28px',
           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230a0a0a' stroke-width='2.5' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`,
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'right 10px center',
+          backgroundPosition: 'right 12px center',
         }}
       >
         {OPTIONS.map(o => (
