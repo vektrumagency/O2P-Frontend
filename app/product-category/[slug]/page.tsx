@@ -1,46 +1,46 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
+import { Suspense } from 'react'
 import { fetchGraphQL } from '@/lib/graphql'
 import { SiteNav } from '@/app/components/SiteNav'
 import { Footer } from '@/app/components/Footer'
 import { BackButton } from '@/app/components/BackButton'
+import { SortSelect } from '@/app/components/SortSelect'
 
-type NavCategory = { name: string; slug: string; image?: { sourceUrl: string; altText: string } }
-type SubCategory = { name: string; slug: string; image?: { sourceUrl: string; altText: string } }
-type Product = {
-  name: string
-  slug: string
-  price?: string
-  regularPrice?: string
-  onSale?: boolean
-  image?: { sourceUrl: string; altText: string }
+const PRODUCTS_PER_PAGE = 24
+
+const SORT_MAP: Record<string, { field: string; order: string }> = {
+  'popularity': { field: 'POPULARITY', order: 'DESC' },
+  'rating':     { field: 'RATING',     order: 'DESC' },
+  'date-desc':  { field: 'DATE',       order: 'DESC' },
+  'price-asc':  { field: 'PRICE',      order: 'ASC'  },
+  'price-desc': { field: 'PRICE',      order: 'DESC' },
+  'stock':      { field: 'MENU_ORDER', order: 'ASC'  },
 }
 
-const NAV_QUERY = `
-  query NavCategories {
-    productCategories(first: 50, where: { hideEmpty: true, parent: 0 }) {
+const CATEGORY_QUERY = `
+  query Category($id: ID!, $slug: String!, $field: ProductsOrderByEnum!, $order: OrderEnum!, $after: String) {
+    productCategory(id: $id, idType: SLUG) {
+      name
+      count
+      children(first: 50) {
+        nodes { name slug count }
+      }
+      ancestors {
+        nodes {
+          name slug
+          children(first: 50) {
+            nodes { name slug count }
+          }
+        }
+      }
+    }
+    allCategories: productCategories(first: 50, where: { hideEmpty: true, parent: 0 }) {
       nodes { name slug image { sourceUrl altText } }
     }
-  }
-`
-
-const CATEGORY_QUERY = `
-  query GetCategory($slug: ID!, $category: String!, $first: Int!, $after: String) {
-    productCategory(id: $slug, idType: SLUG) {
-      name
-      description
-      children(first: 20) {
-        nodes { name slug image { sourceUrl altText } }
-      }
-    }
-    products(first: $first, after: $after, where: { category: $category, status: "publish" }) {
-      pageInfo {
-        hasNextPage
-        endCursor
-        hasPreviousPage
-        startCursor
-      }
+    products(first: ${PRODUCTS_PER_PAGE}, after: $after, where: { category: $slug, orderby: { field: $field, order: $order } }) {
       nodes {
         name slug
         image { sourceUrl altText }
@@ -51,107 +51,220 @@ const CATEGORY_QUERY = `
   }
 `
 
-const PER_PAGE = 24
-
-type PageProps = {
-  params: Promise<{ slug: string }>
-  searchParams: Promise<{ after?: string; before?: string }>
+type SidebarItem = { name: string; slug: string; count: number }
+type NavCategory = { name: string; slug: string; image?: { sourceUrl: string; altText: string } }
+type Product = {
+  name: string; slug: string
+  price?: string; regularPrice?: string; onSale?: boolean
+  image?: { sourceUrl: string; altText: string }
 }
+type CategoryData = {
+  productCategory: {
+    name: string; count: number
+    children: { nodes: SidebarItem[] }
+    ancestors: { nodes: { name: string; slug: string; children: { nodes: SidebarItem[] } }[] }
+  } | null
+  allCategories: { nodes: NavCategory[] }
+  products: { nodes: Product[] }
+}
+
+const NAV_EXCLUDE = ['Sem Categoria', 'Cores Lisas', 'Novidades', 'Produtos']
+
+// Pagination helpers
+function pageUrl(page: number, sort: string) {
+  const p = new URLSearchParams()
+  if (sort !== 'popularity') p.set('sort', sort)
+  if (page > 1) p.set('page', String(page))
+  const qs = p.toString()
+  return qs ? `?${qs}` : '?'
+}
+
+function getPageRange(current: number, total: number): (number | '…')[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
+  const pages: (number | '…')[] = [1]
+  if (current > 3) pages.push('…')
+  for (let i = Math.max(2, current - 1); i <= Math.min(total - 1, current + 1); i++) pages.push(i)
+  if (current < total - 2) pages.push('…')
+  pages.push(total)
+  return pages
+}
+
+function Pagination({ page, totalPages, sort }: { page: number; totalPages: number; sort: string }) {
+  if (totalPages <= 1) return null
+  const range = getPageRange(page, totalPages)
+  return (
+    <div className="flex items-center justify-center gap-1 mt-14 pt-8" style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+      {page > 1 ? (
+        <Link href={pageUrl(page - 1, sort)} className="hover:opacity-50 transition-opacity"
+          style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem', padding: '8px 14px', borderRadius: '999px', border: '1.5px solid rgba(0,0,0,0.12)' }}>
+          ←
+        </Link>
+      ) : (
+        <span style={{ padding: '8px 14px', opacity: 0.2, fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem' }}>←</span>
+      )}
+
+      {range.map((r, i) =>
+        r === '…' ? (
+          <span key={`ellipsis-${i}`} style={{ padding: '8px 6px', opacity: 0.3, fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem' }}>…</span>
+        ) : (
+          <Link
+            key={r}
+            href={pageUrl(r, sort)}
+            style={{
+              fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem',
+              padding: '8px 14px', borderRadius: '999px', minWidth: 38, textAlign: 'center',
+              backgroundColor: r === page ? '#0a0a0a' : 'transparent',
+              color: r === page ? '#fff' : 'inherit',
+              border: r === page ? 'none' : '1.5px solid rgba(0,0,0,0.12)',
+            }}
+            className="hover:opacity-70 transition-opacity"
+          >
+            {r}
+          </Link>
+        )
+      )}
+
+      {page < totalPages ? (
+        <Link href={pageUrl(page + 1, sort)} className="hover:opacity-50 transition-opacity"
+          style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem', padding: '8px 14px', borderRadius: '999px', border: '1.5px solid rgba(0,0,0,0.12)' }}>
+          →
+        </Link>
+      ) : (
+        <span style={{ padding: '8px 14px', opacity: 0.2, fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem' }}>→</span>
+      )}
+    </div>
+  )
+}
+
+function ProductCard({ product }: { product: Product }) {
+  return (
+    <Link href={`/product/${product.slug}`} className="group flex flex-col">
+      <div className="relative overflow-hidden mb-3" style={{ aspectRatio: '1/1', backgroundColor: '#f4f4f2', borderRadius: '16px' }}>
+        {product.image && (
+          <Image
+            src={product.image.sourceUrl}
+            alt={product.image.altText || product.name}
+            fill
+            sizes="(max-width: 768px) 50vw, 25vw"
+            className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+          />
+        )}
+        {product.onSale && (
+          <span className="absolute top-3 left-3"
+            style={{ backgroundColor: '#FFE394', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.7rem', padding: '3px 10px', borderRadius: '999px' }}>
+            Sale
+          </span>
+        )}
+      </div>
+      <p className="line-clamp-2 mb-1" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem', lineHeight: 1.3 }}>
+        {product.name}
+      </p>
+      <div className="flex items-center gap-2 mt-auto pt-1 flex-wrap">
+        {product.onSale && product.regularPrice && (
+          <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.8rem', opacity: 0.35, textDecoration: 'line-through' }}
+            dangerouslySetInnerHTML={{ __html: product.regularPrice }} />
+        )}
+        {product.price && (
+          <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem' }}
+            dangerouslySetInnerHTML={{ __html: product.price }} />
+        )}
+      </div>
+    </Link>
+  )
+}
+
+type PageProps = { params: Promise<{ slug: string }>; searchParams: Promise<{ sort?: string; page?: string }> }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  try {
-    const data = await fetchGraphQL<{ productCategory: { name: string; description?: string } | null }>(
-      CATEGORY_QUERY, { slug, category: slug, first: 1, after: null }
-    )
-    const cat = data.productCategory
-    if (!cat) return { title: 'Categoria' }
-    return {
-      title: cat.name,
-      description: cat.description?.replace(/<[^>]*>/g, '').trim() || `Artigos de ${cat.name} na Order2Party.`,
-    }
-  } catch {
-    return { title: 'Categoria' }
+  const data = await fetchGraphQL<{ productCategory: { name: string; count: number } | null }>(
+    `query Meta($id: ID!) { productCategory(id: $id, idType: SLUG) { name count } }`,
+    { id: slug }
+  ).catch(() => ({ productCategory: null }))
+  const cat = data.productCategory
+  if (!cat) return {}
+  return {
+    title: cat.name,
+    description: `Explora ${cat.count ?? ''} produtos na categoria ${cat.name} na Order2Party.`.trim(),
   }
 }
 
 export default async function CategoryPage({ params, searchParams }: PageProps) {
   const { slug } = await params
-  const { after } = await searchParams
+  const { sort = 'popularity', page: pageParam = '1' } = await searchParams
+  const page = Math.max(1, parseInt(pageParam, 10))
+  const { field, order } = SORT_MAP[sort] ?? SORT_MAP['popularity']
 
-  const [navData, catData] = await Promise.all([
-    fetchGraphQL<{ productCategories: { nodes: NavCategory[] } }>(NAV_QUERY),
-    fetchGraphQL<{
-      productCategory: {
-        name: string
-        description?: string
-        children: { nodes: SubCategory[] }
-      } | null
-      products: {
-        pageInfo: { hasNextPage: boolean; endCursor: string; hasPreviousPage: boolean; startCursor: string }
-        nodes: Product[]
-      }
-    }>(CATEGORY_QUERY, { slug, category: slug, first: PER_PAGE, after: after ?? null }),
-  ])
+  const after = page > 1
+    ? Buffer.from(`arrayconnection:${(page - 1) * PRODUCTS_PER_PAGE - 1}`).toString('base64')
+    : undefined
 
-  if (!catData.productCategory) notFound()
+  const data = await fetchGraphQL<CategoryData>(CATEGORY_QUERY, { id: slug, slug, field, order, after })
 
-  const EXCLUDE = ['Sem Categoria', 'Cores Lisas', 'Novidades', 'Produtos']
-  const categories = navData.productCategories.nodes.filter(c => !EXCLUDE.includes(c.name))
-  const products = catData.products.nodes
-  const pageInfo = catData.products.pageInfo
-  const catName = catData.productCategory.name
-  const subCategories = catData.productCategory.children.nodes
+  if (!data.productCategory) notFound()
+
+  const { productCategory, allCategories, products } = data
+  const navCategories = allCategories.nodes.filter(c => !NAV_EXCLUDE.includes(c.name))
+
+  // Sidebar: children of current, or siblings (parent's children) if this is a subcategory
+  const sidebarItems: SidebarItem[] = productCategory.children.nodes.length > 0
+    ? productCategory.children.nodes
+    : productCategory.ancestors.nodes[0]?.children.nodes ?? []
+  const sidebarParent = productCategory.children.nodes.length === 0 && productCategory.ancestors.nodes[0]
+    ? { name: productCategory.ancestors.nodes[0].name, slug: productCategory.ancestors.nodes[0].slug }
+    : null
+
+  const totalPages = Math.ceil(productCategory.count / PRODUCTS_PER_PAGE)
 
   return (
     <>
-      <SiteNav categories={categories} alwaysVisible />
+      <SiteNav categories={navCategories} alwaysVisible />
 
       <main style={{ paddingTop: '80px', minHeight: '70vh' }}>
         <div style={{ width: '90vw', margin: '0 auto', paddingTop: '40px', paddingBottom: '80px' }}>
           <BackButton />
 
-          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(2rem, 5vw, 4rem)', marginBottom: '40px', lineHeight: 1 }}>
-            {catName}
+          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(40px, 7vw, 108px)', lineHeight: 1, marginBottom: '8px' }}>
+            {productCategory.name}
           </h1>
-
-          {/* Mobile: subcategorias em pills acima dos produtos */}
-          {subCategories.length > 0 && (
-            <div className="md:hidden flex flex-wrap gap-2 mb-8">
-              {subCategories.map((sub) => (
-                <Link
-                  key={sub.slug}
-                  href={`/product-category/${sub.slug}`}
-                  style={{ backgroundColor: '#f2f2f0', borderRadius: '999px', padding: '6px 14px', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.8rem' }}
-                >
-                  {sub.name}
-                </Link>
-              ))}
-            </div>
+          {productCategory.count > 0 && (
+            <p className="mb-8" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.85rem', opacity: 0.4 }}>
+              {productCategory.count} produto{productCategory.count !== 1 ? 's' : ''}
+            </p>
           )}
 
-          {/* Desktop: sidemenu + grelha lado a lado */}
-          <div className="flex gap-12 items-start">
-
-            {/* Sidemenu — visível apenas em desktop */}
-            {subCategories.length > 0 && (
-              <aside className="hidden md:block flex-shrink-0" style={{ width: 180 }}>
-                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.35, marginBottom: '12px' }}>
-                  Subcategorias
+          <div className="flex gap-10 items-start">
+            {/* Sidemenu — desktop */}
+            {sidebarItems.length > 0 && (
+              <aside className="hidden md:block flex-shrink-0" style={{ width: 190 }}>
+                {sidebarParent && (
+                  <Link href={`/product-category/${sidebarParent.slug}`}
+                    className="flex items-center gap-1 mb-3 hover:opacity-60 transition-opacity"
+                    style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.78rem', opacity: 0.45 }}>
+                    ← {sidebarParent.name}
+                  </Link>
+                )}
+                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.35, marginBottom: '10px' }}>
+                  {sidebarParent ? 'Subcategorias' : 'Categorias'}
                 </p>
-                <nav className="flex flex-col gap-1">
-                  {subCategories.map((sub) => (
+                <nav className="flex flex-col">
+                  {sidebarItems.map(item => (
                     <Link
-                      key={sub.slug}
-                      href={`/product-category/${sub.slug}`}
-                      className="flex items-center gap-2 hover:opacity-60 transition-opacity"
-                      style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.88rem', padding: '5px 0' }}
+                      key={item.slug}
+                      href={`/product-category/${item.slug}`}
+                      className="hover:opacity-60 transition-opacity"
+                      style={{
+                        fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.88rem',
+                        padding: '6px 0',
+                        borderBottom: '1px solid rgba(0,0,0,0.06)',
+                        opacity: item.slug === slug ? 1 : undefined,
+                        color: item.slug === slug ? '#0a0a0a' : undefined,
+                      }}
                     >
-                      {sub.image && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={sub.image.sourceUrl} alt={sub.name} style={{ width: 26, height: 26, objectFit: 'contain', borderRadius: 6, backgroundColor: '#f2f2f0', flexShrink: 0 }} />
+                      {item.name}
+                      {item.count > 0 && (
+                        <span style={{ fontSize: '0.75rem', opacity: 0.35, marginLeft: 6 }}>({item.count})</span>
                       )}
-                      {sub.name}
                     </Link>
                   ))}
                 </nav>
@@ -160,115 +273,45 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
             {/* Grelha de produtos */}
             <div className="flex-1 min-w-0">
-              {products.length === 0 ? (
+              {/* Mobile: subcategorias em pills */}
+              {sidebarItems.length > 0 && (
+                <div className="md:hidden flex flex-wrap gap-2 mb-6">
+                  {sidebarItems.map(item => (
+                    <Link key={item.slug} href={`/product-category/${item.slug}`}
+                      style={{
+                        backgroundColor: item.slug === slug ? '#0a0a0a' : '#f2f2f0',
+                        color: item.slug === slug ? '#fff' : undefined,
+                        borderRadius: '999px', padding: '6px 14px',
+                        fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.8rem',
+                      }}>
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {/* Sort */}
+              <div className="flex justify-end mb-6">
+                <Suspense>
+                  <SortSelect current={sort} />
+                </Suspense>
+              </div>
+
+              {products.nodes.length === 0 ? (
                 <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, opacity: 0.4 }}>
                   Sem produtos nesta categoria.
                 </p>
               ) : (
                 <>
-                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.82rem', letterSpacing: '0.06em', opacity: 0.4, marginBottom: '32px', textTransform: 'uppercase' }}>
-                    {products.length} produto{products.length !== 1 ? 's' : ''}
-                  </p>
-
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10">
-                {products.map((product) => (
-                  <Link
-                    key={product.slug}
-                    href={`/product/${product.slug}`}
-                    className="group flex flex-col"
-                  >
-                    <div
-                      className="relative overflow-hidden mb-3"
-                      style={{ aspectRatio: '1 / 1', borderRadius: '20px', backgroundColor: '#f2f2f0' }}
-                    >
-                      {product.image && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={product.image.sourceUrl}
-                          alt={product.image.altText || product.name}
-                          style={{
-                            width: '100%', height: '100%',
-                            objectFit: 'contain',
-                            padding: '12px',
-                            transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                          }}
-                          className="group-hover:scale-105"
-                        />
-                      )}
-                      {product.onSale && (
-                        <span
-                          className="absolute top-3 left-3"
-                          style={{ backgroundColor: '#FFE394', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.7rem', padding: '3px 10px', borderRadius: '999px' }}
-                        >
-                          Sale
-                        </span>
-                      )}
-                    </div>
-
-                    <p className="line-clamp-2 mb-1" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem', lineHeight: 1.3 }}>
-                      {product.name}
-                    </p>
-
-                    <div className="flex items-center gap-2 mt-auto pt-1">
-                      {product.onSale && product.regularPrice && (
-                        <span
-                          style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.8rem', opacity: 0.35, textDecoration: 'line-through' }}
-                          dangerouslySetInnerHTML={{ __html: product.regularPrice }}
-                        />
-                      )}
-                      {product.price && (
-                        <span
-                          style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem' }}
-                          dangerouslySetInnerHTML={{ __html: product.price }}
-                        />
-                      )}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-              {/* Paginação */}
-              {(pageInfo.hasNextPage || after) && (
-                <div className="flex justify-center items-center gap-4 mt-16">
-                  {after && (
-                    <Link
-                      href={`/product-category/${slug}`}
-                      style={{
-                        fontFamily: 'var(--font-secondary)',
-                        fontWeight: 700,
-                        fontSize: '0.9rem',
-                        padding: '12px 28px',
-                        borderRadius: '999px',
-                        border: '1.5px solid rgba(0,0,0,0.15)',
-                      }}
-                      className="hover:opacity-60 transition-opacity"
-                    >
-                      ← Anterior
-                    </Link>
-                  )}
-                  {pageInfo.hasNextPage && (
-                    <Link
-                      href={`/product-category/${slug}?after=${encodeURIComponent(pageInfo.endCursor)}`}
-                      style={{
-                        fontFamily: 'var(--font-secondary)',
-                        fontWeight: 700,
-                        fontSize: '0.9rem',
-                        padding: '12px 28px',
-                        borderRadius: '999px',
-                        backgroundColor: '#0a0a0a',
-                        color: '#fff',
-                      }}
-                      className="hover:opacity-70 transition-opacity"
-                    >
-                      Seguinte →
-                    </Link>
-                  )}
-                </div>
-              )}
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10">
+                    {products.nodes.map(product => (
+                      <ProductCard key={product.slug} product={product} />
+                    ))}
+                  </div>
+                  <Pagination page={page} totalPages={totalPages} sort={sort} />
                 </>
               )}
             </div>
-            {/* fim sidemenu + grelha */}
           </div>
         </div>
       </main>
