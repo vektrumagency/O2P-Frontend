@@ -111,46 +111,64 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
         <div style={{ width: '90vw', margin: '0 auto', paddingTop: '40px', paddingBottom: '80px' }}>
           <BackButton />
 
-          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(2rem, 5vw, 4rem)', marginBottom: '32px', lineHeight: 1 }}>
+          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(2rem, 5vw, 4rem)', marginBottom: '40px', lineHeight: 1 }}>
             {catName}
           </h1>
 
-          {/* Subcategorias */}
+          {/* Mobile: subcategorias em pills acima dos produtos */}
           {subCategories.length > 0 && (
-            <div className="flex flex-wrap gap-3 mb-10">
+            <div className="md:hidden flex flex-wrap gap-2 mb-8">
               {subCategories.map((sub) => (
                 <Link
                   key={sub.slug}
                   href={`/product-category/${sub.slug}`}
-                  className="flex items-center gap-2 hover:opacity-70 transition-opacity"
-                  style={{
-                    backgroundColor: '#f2f2f0',
-                    borderRadius: '999px',
-                    padding: '8px 16px',
-                    fontFamily: 'var(--font-secondary)',
-                    fontWeight: 700,
-                    fontSize: '0.85rem',
-                  }}
+                  style={{ backgroundColor: '#f2f2f0', borderRadius: '999px', padding: '6px 14px', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.8rem' }}
                 >
-                  {sub.image && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={sub.image.sourceUrl} alt={sub.name} style={{ width: 24, height: 24, objectFit: 'contain', borderRadius: '50%' }} />
-                  )}
                   {sub.name}
                 </Link>
               ))}
             </div>
           )}
 
-          {products.length === 0 ? (
-            <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, opacity: 0.4 }}>
-              Sem produtos nesta categoria.
-            </p>
-          ) : (
-            <>
-              <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.82rem', letterSpacing: '0.06em', opacity: 0.4, marginBottom: '32px', textTransform: 'uppercase' }}>
-                {products.length} produto{products.length !== 1 ? 's' : ''}
-              </p>
+          {/* Desktop: sidemenu + grelha lado a lado */}
+          <div className="flex gap-12 items-start">
+
+            {/* Sidemenu — visível apenas em desktop */}
+            {subCategories.length > 0 && (
+              <aside className="hidden md:block flex-shrink-0" style={{ width: 180 }}>
+                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.35, marginBottom: '12px' }}>
+                  Subcategorias
+                </p>
+                <nav className="flex flex-col gap-1">
+                  {subCategories.map((sub) => (
+                    <Link
+                      key={sub.slug}
+                      href={`/product-category/${sub.slug}`}
+                      className="flex items-center gap-2 hover:opacity-60 transition-opacity"
+                      style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.88rem', padding: '5px 0' }}
+                    >
+                      {sub.image && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={sub.image.sourceUrl} alt={sub.name} style={{ width: 26, height: 26, objectFit: 'contain', borderRadius: 6, backgroundColor: '#f2f2f0', flexShrink: 0 }} />
+                      )}
+                      {sub.name}
+                    </Link>
+                  ))}
+                </nav>
+              </aside>
+            )}
+
+            {/* Grelha de produtos */}
+            <div className="flex-1 min-w-0">
+              {products.length === 0 ? (
+                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, opacity: 0.4 }}>
+                  Sem produtos nesta categoria.
+                </p>
+              ) : (
+                <>
+                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.82rem', letterSpacing: '0.06em', opacity: 0.4, marginBottom: '32px', textTransform: 'uppercase' }}>
+                    {products.length} produto{products.length !== 1 ? 's' : ''}
+                  </p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10">
                 {products.map((product) => (
@@ -247,8 +265,11 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                   )}
                 </div>
               )}
-            </>
-          )}
+                </>
+              )}
+            </div>
+            {/* fim sidemenu + grelha */}
+          </div>
         </div>
       </main>
 
