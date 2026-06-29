@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type ReactElement } from 'react'
 
 const COLORS = [
   '#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF',
@@ -54,7 +54,7 @@ const PartyHatIcon = () => (
   </svg>
 )
 
-const segments: (string | JSX.Element)[] = [
+const segments: (string | ReactElement)[] = [
   'ORDER2PARTY CELEBRA AS TUAS FESTAS ',
   <PartyBlowerIcon key="pb1" />,
   ' ANIVERSÁRIOS CASAMENTOS E TODAS AS PEQUENAS CELEBRAÇÕES COM TUDO O QUE PRECISAS PARA A FESTA ',
