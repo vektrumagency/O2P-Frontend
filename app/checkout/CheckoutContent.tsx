@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-// Cart sync via WC Store API requires CORS headers on WordPress.
 import { useCart } from '@/app/context/CartContext'
 
 const WC_BASE = 'https://order2party.pt'
@@ -14,7 +13,7 @@ export function CheckoutContent() {
   function handleCheckout() {
     if (items.length === 0) return
     setLoading(true)
-    window.location.href = `${WC_BASE}/checkout`
+    window.location.href = `${WC_BASE}/finalizar-encomenda/`
   }
 
   if (items.length === 0) {
