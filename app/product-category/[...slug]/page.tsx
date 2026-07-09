@@ -186,10 +186,11 @@ function ProductCard({ product }: { product: Product }) {
   )
 }
 
-type PageProps = { params: Promise<{ slug: string }>; searchParams: Promise<{ sort?: string; page?: string }> }
+type PageProps = { params: Promise<{ slug: string[] }>; searchParams: Promise<{ sort?: string; page?: string }> }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params
+  const { slug: slugParts } = await params
+  const slug = slugParts[slugParts.length - 1]
   const data = await fetchGraphQL<{ productCategory: { name: string; count: number } | null }>(
     `query Meta($id: ID!) { productCategory(id: $id, idType: SLUG) { name count } }`,
     { id: slug }
@@ -203,7 +204,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function CategoryPage({ params, searchParams }: PageProps) {
-  const { slug } = await params
+  const { slug: slugParts } = await params
+  const slug = slugParts[slugParts.length - 1]
   const { sort = 'popularity', page: pageParam = '1' } = await searchParams
   const page = Math.max(1, parseInt(pageParam, 10))
   const { field, order } = SORT_MAP[sort] ?? SORT_MAP['popularity']
@@ -233,7 +235,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     <>
       <SiteNav categories={navCategories} alwaysVisible />
 
-      <main style={{ paddingTop: '80px', minHeight: '70vh' }}>
+      <main style={{ paddingTop: '114px', minHeight: '70vh' }}>
         <div style={{ width: '90vw', margin: '0 auto', paddingTop: '40px', paddingBottom: '80px' }}>
           <BackButton />
 
