@@ -18,9 +18,10 @@ type RelatedProduct = {
   price?: string
   image?: { sourceUrl: string; altText: string }
 }
-type Product = {
+export type Product = {
   databaseId: number
   name: string
+  slug: string
   description: string
   shortDescription: string
   price: string
@@ -56,7 +57,10 @@ export function ProductView({ product }: { product: Product }) {
 
   function handleClose() {
     setClosing(true)
-    setTimeout(() => router.back(), 380)
+    setTimeout(() => {
+      if (window.history.length > 1) router.back()
+      else router.push(category ? `/product-category/${category.slug}` : '/')
+    }, 380)
   }
 
   const variationAttrs = product.attributes?.nodes.filter(a => a.variation) ?? []
@@ -108,16 +112,16 @@ export function ProductView({ product }: { product: Product }) {
 
   return (
     <div
-      className="fixed inset-0 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden"
+      className="relative md:fixed md:inset-0 md:z-[70] pt-[114px] md:pt-0 flex flex-col md:flex-row overflow-visible md:overflow-hidden"
       style={{ animation: closing ? 'product-bg-exit 0.38s ease forwards' : 'product-bg-enter 0.35s ease forwards' }}
     >
       {/* Painel esquerdo */}
       <div
-        className="flex flex-col md:flex-shrink-0 overflow-y-auto"
+        className="flex flex-col order-2 md:order-1 w-full md:w-[44vw] md:flex-shrink-0 overflow-visible md:overflow-y-auto"
         style={{
-          width: 'min(100%, 44vw)',
           backgroundColor: '#FFE394',
-          padding: 'clamp(32px, 4vw, 56px)',
+          padding: 'clamp(24px, 4vw, 56px)',
+          paddingTop: '24px',
           animation: closing
             ? 'product-card-exit 0.32s cubic-bezier(0.4, 0, 1, 1) forwards'
             : 'product-card-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both',
@@ -186,7 +190,7 @@ export function ProductView({ product }: { product: Product }) {
           ))}
 
           {/* Quantidade + botão */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             <div
               className="flex items-center flex-shrink-0"
               style={{ border: '2px solid #0a0a0a', borderRadius: '999px' }}
@@ -213,7 +217,7 @@ export function ProductView({ product }: { product: Product }) {
             <button
               onClick={addToCart}
               disabled={adding || !canAddToCart || !inStock}
-              className="flex items-center gap-2 group"
+              className="flex items-center justify-center gap-2 group w-full sm:w-auto"
               style={{
                 fontFamily: 'var(--font-secondary)',
                 fontWeight: 700,
@@ -323,7 +327,7 @@ export function ProductView({ product }: { product: Product }) {
       </div>
 
       {/* Painel direito — galeria */}
-      <div className="flex-1 flex flex-col" style={{ backgroundColor: '#f2f2f0', minHeight: '50vw' }}>
+      <div className="flex-1 flex flex-col order-1 md:order-2" style={{ backgroundColor: '#f2f2f0', minHeight: 'min(60vh, 520px)' }}>
         {/* Imagem principal */}
         <div className="relative flex-1">
           {/* Botão fechar */}

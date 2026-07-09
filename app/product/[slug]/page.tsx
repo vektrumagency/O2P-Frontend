@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { fetchGraphQL } from '@/lib/graphql'
 import { SiteNav } from '@/app/components/SiteNav'
 import { Footer } from '@/app/components/Footer'
-import { ProductView } from './ProductView'
+import { ProductView, type Product } from './ProductView'
 
 type Category = { name: string; slug: string; image?: { sourceUrl: string; altText: string } }
 
@@ -20,17 +20,27 @@ const PRODUCT_QUERY = `
     product(id: $slug, idType: SLUG) {
       databaseId
       name
+      slug
       description
       shortDescription
-      price
-      regularPrice
-      onSale
-      stockStatus
       image { sourceUrl altText }
       galleryImages { nodes { sourceUrl altText } }
       productCategories { nodes { name slug } }
-      related(first: 4) { nodes { name slug price image { sourceUrl altText } } }
+      related(first: 4) {
+        nodes {
+          name
+          slug
+          image { sourceUrl altText }
+          ... on SimpleProduct { price }
+          ... on VariableProduct { price }
+        }
+      }
+      ... on SimpleProduct { price regularPrice onSale stockStatus }
       ... on VariableProduct {
+        price
+        regularPrice
+        onSale
+        stockStatus
         variations(first: 50) {
           nodes {
             databaseId
@@ -71,7 +81,7 @@ export default async function ProductPage({ params }: PageProps) {
 
   const [navData, productData] = await Promise.all([
     fetchGraphQL<{ productCategories: { nodes: Category[] } }>(NAV_QUERY),
-    fetchGraphQL<{ product: unknown }>(PRODUCT_QUERY, { slug }),
+    fetchGraphQL<{ product: Product | null }>(PRODUCT_QUERY, { slug }),
   ])
 
   if (!productData.product) notFound()
@@ -81,7 +91,7 @@ export default async function ProductPage({ params }: PageProps) {
 
   return (
     <>
-      <SiteNav categories={categories} />
+      <SiteNav categories={categories} alwaysVisible />
       <ProductView product={productData.product} />
       <Footer />
     </>
