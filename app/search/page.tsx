@@ -64,7 +64,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
     <>
       <SiteNav categories={categories} alwaysVisible />
 
-      <main style={{ paddingTop: '80px', minHeight: '70vh' }}>
+      <main style={{ paddingTop: '114px', minHeight: '70vh' }}>
         {/* Cabeçalho de pesquisa */}
         <section style={{ borderBottom: '1px solid rgba(0,0,0,0.08)', paddingBottom: '32px' }}>
           <div style={{ width: '90vw', margin: '0 auto', paddingTop: '40px' }}>

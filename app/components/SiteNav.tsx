@@ -9,6 +9,24 @@ type Category = { name: string; slug: string; image?: { sourceUrl: string; altTe
 
 const COLORS = ['#C8A84B','#C4A0A0','#4A8B8B','#C8A84B','#5A7A5A','#8B7355','#FFB3C6','#C9B8F5']
 const VISIBLE = 5
+export const ANNOUNCE_HEIGHT = 34
+
+function AnnounceBar() {
+  return (
+    <div
+      className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-center gap-2 px-4 overflow-hidden"
+      style={{ height: ANNOUNCE_HEIGHT, backgroundColor: '#0a0a0a' }}
+    >
+      <p className="uppercase whitespace-nowrap" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'clamp(9px, 2.4vw, 12px)', letterSpacing: '0.04em', color: '#FFE394' }}>
+        Portes Grátis acima de 39,99€
+      </p>
+      <span style={{ display: 'block', width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#5BB5C4', flexShrink: 0 }} />
+      <p className="uppercase whitespace-nowrap" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'clamp(9px, 2.4vw, 12px)', letterSpacing: '0.04em', color: '#FFE394' }}>
+        Entregas em 24h até às 15h
+      </p>
+    </div>
+  )
+}
 
 export function SiteNav({ categories, alwaysVisible = false }: { categories: Category[]; alwaysVisible?: boolean }) {
   const [open, setOpen] = useState(false)
@@ -52,7 +70,8 @@ export function SiteNav({ categories, alwaysVisible = false }: { categories: Cat
 
   return (
     <>
-      <header ref={ref} className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: bg, borderBottom: border, transition: 'border-color 0.2s, background-color 0.2s' }}>
+      <AnnounceBar />
+      <header ref={ref} className="fixed left-0 right-0 z-50" style={{ top: ANNOUNCE_HEIGHT, backgroundColor: bg, borderBottom: border, transition: 'border-color 0.2s, background-color 0.2s' }}>
 
         {/* ── Desktop ── */}
         <nav className="hidden md:flex justify-center items-center gap-10 py-5 relative">
@@ -125,7 +144,7 @@ export function SiteNav({ categories, alwaysVisible = false }: { categories: Cat
 
       {/* ── Mobile menu ── */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 overflow-y-auto" style={{ backgroundColor: '#FFE394', paddingTop: '64px' }}>
+        <div className="fixed inset-0 z-40 overflow-y-auto" style={{ backgroundColor: '#FFE394', paddingTop: ANNOUNCE_HEIGHT + 64 }}>
           <div className="px-5 pt-6 pb-10">
             <p className="uppercase mb-3" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.12em', opacity: 0.45 }}>Categorias</p>
             {categories.map(cat => (

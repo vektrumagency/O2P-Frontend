@@ -30,7 +30,7 @@ export default async function CheckoutPage() {
     <>
       <SiteNav categories={categories} alwaysVisible />
 
-      <main style={{ paddingTop: '80px', minHeight: '70vh' }}>
+      <main style={{ paddingTop: '114px', minHeight: '70vh' }}>
         <div style={{ width: '90vw', margin: '0 auto', paddingTop: '40px', paddingBottom: '80px' }}>
           <BackButton />
 

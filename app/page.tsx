@@ -119,7 +119,7 @@ export default async function Home() {
   return (
     <>
       <SiteNav categories={categories} />
-      <main className="flex-1 pt-[60px]">
+      <main className="flex-1 pt-[94px]">
         <Hero />
         <Manifesto />
         <BannerCTA />
