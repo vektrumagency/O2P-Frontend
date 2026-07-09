@@ -129,3 +129,39 @@ body {
     border-radius: clamp(24px, 5vw, 80px) clamp(24px, 5vw, 80px) 0 0;
   }
 }
+
+.info-prose {
+  font-family: var(--font-fraktion-sans);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgba(10, 10, 10, 0.8);
+}
+.info-prose p {
+  margin-bottom: 1.1em;
+}
+.info-prose strong, .info-prose b {
+  font-weight: 700;
+  color: #0a0a0a;
+}
+.info-prose a {
+  color: #0EA5A4;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.info-prose a:hover {
+  opacity: 0.7;
+}
+.info-prose ul, .info-prose ol {
+  margin: 0 0 1.1em 1.4em;
+}
+.info-prose li {
+  margin-bottom: 0.5em;
+}
+.info-prose h2, .info-prose h3 {
+  font-family: var(--font-bricolage);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 1.6em 0 0.6em;
+}
+.info-prose h2 { font-size: 1.5rem; }
+.info-prose h3 { font-size: 1.2rem; }

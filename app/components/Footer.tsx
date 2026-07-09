@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export function Footer() {
   return (
     <footer className="footer-animated mt-16">
@@ -8,7 +10,7 @@ export function Footer() {
               Contacto
             </p>
             {[
-              { label: 'Telefone: 933 544 261', href: 'tel:933544261' },
+              { label: 'Telefone: 933 544 261 (rede móvel digital)', href: 'tel:933544261' },
               { label: 'geral@order2party.pt', href: 'mailto:geral@order2party.pt' },
             ].map(link => (
               <a
@@ -32,31 +34,37 @@ export function Footer() {
               Links Úteis
             </p>
             {[
-              { label: 'Política de Privacidade', href: 'https://order2party.pt/politica-de-privacidade' },
-              { label: 'Termos e Condições', href: 'https://order2party.pt/termos-e-condicoes' },
-              { label: 'Política de Reembolso', href: 'https://order2party.pt/politica-de-reembolso' },
-              { label: 'Entrega de Encomendas', href: 'https://order2party.pt/entrega-de-encomendas' },
-              { label: 'Perguntas Frequentes', href: 'https://order2party.pt/perguntas-frequentes' },
-              { label: 'Contacte-nos', href: 'https://order2party.pt/contactos' },
-              { label: 'Livro de Reclamações Online', href: 'https://order2party.pt/livro-de-reclamacoes' },
-              { label: 'Resolução de Conflitos', href: 'https://order2party.pt/resolucao-de-conflitos' },
+              { label: 'Política de Privacidade', href: '/politica-de-privacidade' },
+              { label: 'Termos e Condições', href: '/termos-e-condicoes' },
+              { label: 'Política de Reembolso', href: '/politica-reembolso' },
+              { label: 'Entrega de Encomendas', href: '/politica-entregas' },
+              { label: 'Perguntas Frequentes', href: '/faqs' },
+              { label: 'Contacte-nos', href: '/contactos' },
+              { label: 'Livro de Reclamações Online', href: '/contactos/livro-de-reclamacoes-online' },
+              { label: 'Resolução de Conflitos', href: '/resolucao-de-conflitos' },
             ].map(link => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
                 className="block mb-2 hover:opacity-60 transition-opacity"
                 style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem' }}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
           <div>
             <p className="mb-5" style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.3rem', lineHeight: 1 }}>
               Informações
             </p>
+            <Link
+              href="/sobre-nos"
+              className="block mb-2 hover:opacity-60 transition-opacity"
+              style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '1rem' }}
+            >
+              Sobre Nós
+            </Link>
             {[
-              { label: 'Sobre Nós', href: 'https://order2party.pt/sobre-nos' },
               { label: 'Facebook', href: 'https://facebook.com' },
               { label: 'Instagram', href: 'https://instagram.com' },
             ].map(link => (
