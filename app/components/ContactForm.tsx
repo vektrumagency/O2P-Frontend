@@ -8,7 +8,7 @@ const inputStyle: CSSProperties = {
   borderRadius: '14px',
   border: '1.5px solid rgba(0,0,0,0.15)',
   fontFamily: 'var(--font-fraktion-sans)',
-  fontSize: '0.9rem',
+  fontSize: 'var(--text-base)',
   backgroundColor: '#fff',
 }
 
@@ -17,7 +17,7 @@ const labelStyle: CSSProperties = {
   marginBottom: '6px',
   fontFamily: 'var(--font-fraktion-sans)',
   fontWeight: 700,
-  fontSize: '0.72rem',
+  fontSize: 'var(--text-2xs)',
   letterSpacing: '0.06em',
   textTransform: 'uppercase',
   opacity: 0.45,
@@ -54,7 +54,7 @@ export function ContactForm() {
         className="hover:opacity-80 transition-opacity"
         style={{
           alignSelf: 'flex-start',
-          fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.95rem',
+          fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-md)',
           padding: '13px 28px', borderRadius: '999px',
           backgroundColor: '#0a0a0a', color: '#FFE394',
           border: 'none', cursor: 'pointer',

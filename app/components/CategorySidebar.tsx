@@ -27,7 +27,7 @@ export function CategorySidebar({ items, currentSlug, parentName, parentSlug, la
         style={{
           fontFamily: 'var(--font-secondary)',
           fontWeight: 700,
-          fontSize: '0.88rem',
+          fontSize: 'var(--text-sm)',
           padding: '10px 18px',
           borderRadius: '999px',
           border: '1.5px solid rgba(0,0,0,0.15)',
@@ -62,7 +62,7 @@ export function CategorySidebar({ items, currentSlug, parentName, parentSlug, la
             }}
           >
             <div className="flex items-center justify-between mb-6">
-              <p style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.6rem', lineHeight: 1 }}>
+              <p style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', lineHeight: 1 }}>
                 {label}
               </p>
               <button onClick={() => setOpen(false)} className="hover:opacity-50 transition-opacity" aria-label="Fechar">
@@ -77,7 +77,7 @@ export function CategorySidebar({ items, currentSlug, parentName, parentSlug, la
                 href={`/product-category/${parentSlug}`}
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-1 mb-4 hover:opacity-60 transition-opacity"
-                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.82rem', opacity: 0.45 }}
+                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-sm)', opacity: 0.45 }}
               >
                 ← {parentName}
               </Link>
@@ -92,7 +92,7 @@ export function CategorySidebar({ items, currentSlug, parentName, parentSlug, la
                   style={{
                     fontFamily: 'var(--font-secondary)',
                     fontWeight: 700,
-                    fontSize: '0.95rem',
+                    fontSize: 'var(--text-md)',
                     padding: '12px 0',
                     borderBottom: '1px solid rgba(0,0,0,0.07)',
                     color: item.slug === currentSlug ? '#0a0a0a' : undefined,
@@ -102,7 +102,7 @@ export function CategorySidebar({ items, currentSlug, parentName, parentSlug, la
                 >
                   {item.name}
                   {item.count > 0 && (
-                    <span style={{ fontSize: '0.78rem', opacity: 0.35, marginLeft: 6 }}>({item.count})</span>
+                    <span style={{ fontSize: 'var(--text-xs)', opacity: 0.35, marginLeft: 6 }}>({item.count})</span>
                   )}
                 </Link>
               ))}

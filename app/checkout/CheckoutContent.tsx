@@ -19,10 +19,10 @@ export function CheckoutContent() {
   if (items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center" style={{ minHeight: '40vh', gap: 20 }}>
-        <p style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)' }}>
+        <p style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-2xl)' }}>
           O teu carrinho está vazio.
         </p>
-        <Link href="/" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem', backgroundColor: '#0a0a0a', color: '#FFE394', padding: '12px 28px', borderRadius: '999px' }}>
+        <Link href="/" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-base)', backgroundColor: '#0a0a0a', color: '#FFE394', padding: '12px 28px', borderRadius: '999px' }}>
           Continuar a comprar
         </Link>
       </div>
@@ -34,7 +34,7 @@ export function CheckoutContent() {
 
       {/* Resumo do pedido */}
       <div className="flex-1">
-        <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', marginBottom: 24, lineHeight: 1 }}>
+        <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', marginBottom: 24, lineHeight: 1 }}>
           Resumo do pedido
         </h2>
 
@@ -48,15 +48,15 @@ export function CheckoutContent() {
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <p className="line-clamp-2" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem', lineHeight: 1.3 }}>
+                <p className="line-clamp-2" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', lineHeight: 1.3 }}>
                   {item.name}
                 </p>
-                <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.8rem', opacity: 0.45, marginTop: 4 }}>
+                <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-xs)', opacity: 0.45, marginTop: 4 }}>
                   Qtd: {item.quantity}
                 </p>
               </div>
               <span
-                style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem', flexShrink: 0 }}
+                style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-base)', flexShrink: 0 }}
                 dangerouslySetInnerHTML={{ __html: item.price }}
               />
             </div>
@@ -67,20 +67,20 @@ export function CheckoutContent() {
       {/* Painel lateral */}
       <div className="lg:w-80 flex-shrink-0">
         <div style={{ backgroundColor: '#FFE394', borderRadius: 24, padding: '32px 28px', position: 'sticky', top: 100 }}>
-          <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.5rem', marginBottom: 24 }}>
+          <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', marginBottom: 24 }}>
             Total
           </h2>
 
           <div className="flex justify-between items-center mb-2">
-            <span style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.88rem', opacity: 0.6 }}>Subtotal</span>
-            <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1rem' }}>{total}</span>
+            <span style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-sm)', opacity: 0.6 }}>Subtotal</span>
+            <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-md)' }}>{total}</span>
           </div>
 
-          <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.75rem', opacity: 0.4, marginTop: 8, marginBottom: 24 }}>
+          <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-xs)', opacity: 0.4, marginTop: 8, marginBottom: 24 }}>
             Portes calculados no passo seguinte.
           </p>
 
-          <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.75rem', opacity: 0.4, marginBottom: 16 }}>
+          <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-xs)', opacity: 0.4, marginBottom: 16 }}>
             Serás redirecionado para order2party.pt para concluir o pagamento.
           </p>
 
@@ -90,7 +90,7 @@ export function CheckoutContent() {
             style={{
               display: 'block', width: '100%', textAlign: 'center',
               backgroundColor: '#0a0a0a', color: '#FFE394',
-              fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1rem',
+              fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-md)',
               padding: '14px 24px', borderRadius: '999px',
               opacity: loading ? 0.6 : 1,
               cursor: loading ? 'not-allowed' : 'pointer',
@@ -103,7 +103,7 @@ export function CheckoutContent() {
           <Link
             href="/cart"
             className="block text-center mt-4 hover:opacity-50 transition-opacity"
-            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem', opacity: 0.4 }}
+            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-sm)', opacity: 0.4 }}
           >
             ← Editar carrinho
           </Link>

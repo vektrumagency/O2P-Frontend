@@ -31,7 +31,7 @@ export function SortSelect({ current }: { current: string }) {
         style={{
           fontFamily: 'var(--font-fraktion-sans)',
           fontWeight: 700,
-          fontSize: '0.88rem',
+          fontSize: 'var(--text-sm)',
           border: '1.5px solid rgba(0,0,0,0.15)',
           borderRadius: '999px',
           padding: '10px 36px 10px 14px',

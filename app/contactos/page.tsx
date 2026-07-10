@@ -34,13 +34,13 @@ export default async function ContactosPage() {
         <div style={{ width: '90vw', margin: '0 auto', paddingTop: '40px', paddingBottom: '80px' }}>
           <BackButton />
 
-          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(2rem, 4vw, 3.2rem)', marginBottom: '40px', lineHeight: 1 }}>
+          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-3xl)', marginBottom: '40px', lineHeight: 1 }}>
             Contactos
           </h1>
 
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
             <div className="flex-1" style={{ maxWidth: 480 }}>
-              <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.3rem', marginBottom: 20 }}>
+              <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', marginBottom: 20 }}>
                 Envie-nos uma mensagem
               </h2>
               <ContactForm />
@@ -48,32 +48,32 @@ export default async function ContactosPage() {
 
             <div className="lg:w-72 flex-shrink-0">
               <div style={{ backgroundColor: '#FFE394', borderRadius: 24, padding: '32px 28px' }}>
-                <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.3rem', marginBottom: 20 }}>
+                <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', marginBottom: 20 }}>
                   Fale connosco
                 </h2>
 
                 <a href="tel:933544261" className="block mb-4 hover:opacity-60 transition-opacity">
-                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.5, marginBottom: 2 }}>Telefone</p>
-                  <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1rem' }}>933 544 261</p>
-                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontSize: '0.72rem', opacity: 0.5 }}>Custo de chamada para rede móvel nacional</p>
+                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-2xs)', letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.5, marginBottom: 2 }}>Telefone</p>
+                  <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-md)' }}>933 544 261</p>
+                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontSize: 'var(--text-2xs)', opacity: 0.5 }}>Custo de chamada para rede móvel nacional</p>
                 </a>
 
                 <a href="mailto:geral@order2party.pt" className="block mb-4 hover:opacity-60 transition-opacity">
-                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.5, marginBottom: 2 }}>E-mail</p>
-                  <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1rem' }}>geral@order2party.pt</p>
+                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-2xs)', letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.5, marginBottom: 2 }}>E-mail</p>
+                  <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-md)' }}>geral@order2party.pt</p>
                 </a>
 
                 <div className="mb-2">
-                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.5, marginBottom: 2 }}>Morada</p>
-                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem' }}>Rua Prof. Manuel Cavaleiro Ferreira 4C</p>
-                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontSize: '0.8rem', opacity: 0.6 }}>Apenas loja online</p>
+                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-2xs)', letterSpacing: '0.06em', textTransform: 'uppercase', opacity: 0.5, marginBottom: 2 }}>Morada</p>
+                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)' }}>Rua Prof. Manuel Cavaleiro Ferreira 4C</p>
+                  <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontSize: 'var(--text-xs)', opacity: 0.6 }}>Apenas loja online</p>
                 </div>
               </div>
 
               <Link
                 href="/contactos/livro-de-reclamacoes-online"
                 className="block mt-4 hover:opacity-60 transition-opacity"
-                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.85rem', opacity: 0.5, textDecoration: 'underline' }}
+                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-sm)', opacity: 0.5, textDecoration: 'underline' }}
               >
                 Livro de Reclamações Online
               </Link>

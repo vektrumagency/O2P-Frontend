@@ -47,7 +47,7 @@ function ProductItem({ p }: { p: Product }) {
               backgroundColor: '#FFE394',
               fontFamily: 'var(--font-secondary)',
               fontWeight: 700,
-              fontSize: '0.85rem',
+              fontSize: 'var(--text-sm)',
               width: '56px',
               height: '42px',
               borderRadius: '50%',
@@ -64,10 +64,11 @@ function ProductItem({ p }: { p: Product }) {
         )}
       </div>
       <p
-        className="text-lg text-center mt-3 line-clamp-2"
+        className="text-center mt-3 line-clamp-2"
         style={{
           fontFamily: 'var(--font-fraktion-sans)',
           fontWeight: 700,
+          fontSize: 'var(--text-base)',
         }}
       >
         {p.name}

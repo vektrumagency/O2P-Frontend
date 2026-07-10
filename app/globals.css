@@ -12,6 +12,21 @@
 
   --font-heading: var(--font-bricolage);
   --font-sans: var(--font-dm-sans);
+
+  /* Type scale — fluid, consistent sizes for all UI text.
+     Use var(--text-*) instead of ad-hoc rem/px values so mobile
+     and desktop stay proportionate and every "role" (label, body,
+     heading...) looks the same size everywhere it's used. */
+  --text-2xs: clamp(0.68rem, 0.65rem + 0.15vw, 0.72rem);   /* micro labels, eyebrows, badges */
+  --text-xs: clamp(0.74rem, 0.71rem + 0.15vw, 0.8rem);     /* captions, meta, small buttons */
+  --text-sm: clamp(0.82rem, 0.78rem + 0.2vw, 0.88rem);     /* secondary body, nav links, form labels */
+  --text-base: clamp(0.88rem, 0.84rem + 0.2vw, 0.95rem);   /* default body text */
+  --text-md: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);     /* emphasized body, prices, buttons */
+  --text-lg: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);          /* card titles, small subheadings */
+  --text-xl: clamp(1.3rem, 1.1rem + 1vw, 1.6rem);          /* section subheadings */
+  --text-2xl: clamp(1.6rem, 1.3rem + 1.5vw, 2.2rem);       /* secondary page headings */
+  --text-3xl: clamp(2rem, 1.6rem + 2vw, 3.2rem);           /* page H1 */
+  --text-display: clamp(2.2rem, 1.6rem + 3vw, 4rem);       /* hero-scale titles */
 }
 
 html {

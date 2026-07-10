@@ -122,7 +122,7 @@ export function SiteNav({ categories, alwaysVisible = false }: { categories: Cat
 
         {/* ── Mobile bar ── */}
         <div className="flex md:hidden items-center justify-between px-5 py-4 overflow-hidden">
-          <Link href="/" className="transition-all duration-300 select-none hover:opacity-70" style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.4rem', opacity: navVisible || mobileOpen ? 1 : 0, transform: navVisible || mobileOpen ? 'translateY(0)' : 'translateY(-4px)', color: '#5BB5C4' }}>
+          <Link href="/" className="transition-all duration-300 select-none hover:opacity-70" style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', opacity: navVisible || mobileOpen ? 1 : 0, transform: navVisible || mobileOpen ? 'translateY(0)' : 'translateY(-4px)', color: '#5BB5C4' }}>
             order2party
           </Link>
           <div className="flex items-center gap-4">
@@ -146,16 +146,16 @@ export function SiteNav({ categories, alwaysVisible = false }: { categories: Cat
       {mobileOpen && (
         <div className="fixed inset-0 z-40 overflow-y-auto" style={{ backgroundColor: '#FFE394', paddingTop: ANNOUNCE_HEIGHT + 64 }}>
           <div className="px-5 pt-6 pb-10">
-            <p className="uppercase mb-3" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.12em', opacity: 0.45 }}>Categorias</p>
+            <p className="uppercase mb-3" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-2xs)', letterSpacing: '0.12em', opacity: 0.45 }}>Categorias</p>
             {categories.map(cat => (
-              <a key={cat.slug} href={`/product-category/${cat.slug}`} className="block py-3 hover:opacity-60 transition-opacity" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1.1rem', borderBottom: '1px solid rgba(0,0,0,0.08)' }} onClick={() => setMobileOpen(false)}>
+              <a key={cat.slug} href={`/product-category/${cat.slug}`} className="block py-3 hover:opacity-60 transition-opacity" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-lg)', borderBottom: '1px solid rgba(0,0,0,0.08)' }} onClick={() => setMobileOpen(false)}>
                 {cat.name}
               </a>
             ))}
-            <a href="#produtos" className="block py-3 mt-2 hover:opacity-60 transition-opacity" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1.1rem', borderBottom: '1px solid rgba(0,0,0,0.08)' }} onClick={() => setMobileOpen(false)}>
+            <a href="#produtos" className="block py-3 mt-2 hover:opacity-60 transition-opacity" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-lg)', borderBottom: '1px solid rgba(0,0,0,0.08)' }} onClick={() => setMobileOpen(false)}>
               Novidades
             </a>
-            <button onClick={() => { window.dispatchEvent(new Event('open-search')); setMobileOpen(false) }} className="flex items-center gap-3 py-3 w-full hover:opacity-60 transition-opacity" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1.1rem' }}>
+            <button onClick={() => { window.dispatchEvent(new Event('open-search')); setMobileOpen(false) }} className="flex items-center gap-3 py-3 w-full hover:opacity-60 transition-opacity" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               Pesquisar
             </button>

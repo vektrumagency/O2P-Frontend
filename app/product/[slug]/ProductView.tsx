@@ -128,7 +128,7 @@ export function ProductView({ product }: { product: Product }) {
         }}
       >
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 mb-6 flex-wrap" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.75rem' }}>
+        <nav className="flex items-center gap-1.5 mb-6 flex-wrap" style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-xs)' }}>
           <Link href="/" className="hover:opacity-60 transition-opacity" style={{ opacity: 0.45 }}>Início</Link>
           {category && (
             <>
@@ -147,14 +147,14 @@ export function ProductView({ product }: { product: Product }) {
           {category && (
             <p
               className="mb-4 uppercase"
-              style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.75rem', letterSpacing: '0.1em', opacity: 0.5 }}
+              style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-xs)', letterSpacing: '0.1em', opacity: 0.5 }}
             >
               {category.name}
             </p>
           )}
 
           <h1
-            style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(2.2rem, 4.5vw, 4rem)', lineHeight: 1.0, marginBottom: 'clamp(24px, 3vw, 40px)' }}
+            style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-display)', lineHeight: 1.0, marginBottom: 'clamp(24px, 3vw, 40px)' }}
           >
             {product.name}
           </h1>
@@ -162,7 +162,7 @@ export function ProductView({ product }: { product: Product }) {
           {/* Variações */}
           {variationAttrs.map(attr => (
             <div key={attr.name} className="mb-5">
-              <p className="mb-2 uppercase" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.08em', opacity: 0.5 }}>
+              <p className="mb-2 uppercase" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-2xs)', letterSpacing: '0.08em', opacity: 0.5 }}>
                 {attr.name}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -173,7 +173,7 @@ export function ProductView({ product }: { product: Product }) {
                     style={{
                       fontFamily: 'var(--font-secondary)',
                       fontWeight: 700,
-                      fontSize: '0.82rem',
+                      fontSize: 'var(--text-sm)',
                       padding: '5px 14px',
                       borderRadius: '999px',
                       border: '2px solid #0a0a0a',
@@ -221,7 +221,7 @@ export function ProductView({ product }: { product: Product }) {
               style={{
                 fontFamily: 'var(--font-secondary)',
                 fontWeight: 700,
-                fontSize: '0.95rem',
+                fontSize: 'var(--text-md)',
                 padding: '11px 24px',
                 borderRadius: '999px',
                 border: '2px solid #0a0a0a',
@@ -271,11 +271,11 @@ export function ProductView({ product }: { product: Product }) {
             >
               <p
                 className="uppercase flex-shrink-0"
-                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.1em', opacity: 0.45, width: '100px' }}
+                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', opacity: 0.45, width: '100px' }}
               >
                 {row.label}
               </p>
-              <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.85rem', lineHeight: 1.5 }}>
+              <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-sm)', lineHeight: 1.5 }}>
                 {row.value}
               </p>
             </div>
@@ -285,7 +285,7 @@ export function ProductView({ product }: { product: Product }) {
         {/* Produtos relacionados */}
         {(product.related?.nodes?.length ?? 0) > 0 && (
           <div style={{ marginTop: '32px', borderTop: '1px solid rgba(0,0,0,0.12)', paddingTop: '24px' }}>
-            <p className="uppercase mb-4" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.1em', opacity: 0.45 }}>
+            <p className="uppercase mb-4" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', opacity: 0.45 }}>
               Relacionados
             </p>
             <div className="flex flex-col gap-3">
@@ -306,12 +306,12 @@ export function ProductView({ product }: { product: Product }) {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="line-clamp-1" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.82rem', lineHeight: 1.3 }}>
+                    <p className="line-clamp-1" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', lineHeight: 1.3 }}>
                       {p.name}
                     </p>
                     {p.price && (
                       <span
-                        style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.78rem', opacity: 0.6 }}
+                        style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-xs)', opacity: 0.6 }}
                         dangerouslySetInnerHTML={{ __html: p.price }}
                       />
                     )}
@@ -334,7 +334,7 @@ export function ProductView({ product }: { product: Product }) {
           <button
             onClick={handleClose}
             className="absolute top-6 right-6 flex items-center gap-2 hover:opacity-50 transition-opacity z-10"
-            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem' }}
+            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-sm)' }}
           >
             Fechar
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">

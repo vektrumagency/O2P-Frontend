@@ -12,7 +12,7 @@ function Question({ item }: { item: FAQItem }) {
       <button
         onClick={() => setOpen(o => !o)}
         className="flex items-center justify-between gap-4 w-full text-left hover:opacity-70 transition-opacity"
-        style={{ padding: '18px 4px', fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.95rem' }}
+        style={{ padding: '18px 4px', fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-md)' }}
       >
         {item.q}
         <svg
@@ -23,7 +23,7 @@ function Question({ item }: { item: FAQItem }) {
         </svg>
       </button>
       {open && (
-        <p style={{ paddingBottom: '18px', paddingRight: '28px', fontFamily: 'var(--font-fraktion-sans)', fontSize: '0.88rem', lineHeight: 1.6, opacity: 0.65 }}>
+        <p style={{ paddingBottom: '18px', paddingRight: '28px', fontFamily: 'var(--font-fraktion-sans)', fontSize: 'var(--text-sm)', lineHeight: 1.6, opacity: 0.65 }}>
           {item.a}
         </p>
       )}
@@ -36,7 +36,7 @@ export function FAQAccordion({ groups }: { groups: FAQGroup[] }) {
     <div className="flex flex-col gap-10">
       {groups.map(group => (
         <div key={group.category}>
-          <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.4rem', marginBottom: '8px' }}>
+          <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', marginBottom: '8px' }}>
             {group.category}
           </h2>
           <div>

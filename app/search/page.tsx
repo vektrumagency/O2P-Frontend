@@ -78,17 +78,17 @@ export default async function SearchPage({ searchParams }: PageProps) {
           <div style={{ width: '90vw', margin: '0 auto', paddingTop: '40px', paddingBottom: '80px' }}>
 
             {!q && (
-              <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '1rem', opacity: 0.35 }}>
+              <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-md)', opacity: 0.35 }}>
                 Começa a escrever para pesquisar produtos...
               </p>
             )}
 
             {q && results.length === 0 && (
               <div>
-                <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1.1rem', marginBottom: '8px' }}>
+                <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-lg)', marginBottom: '8px' }}>
                   Nenhum resultado para &ldquo;{q}&rdquo;
                 </p>
-                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem', opacity: 0.4 }}>
+                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', opacity: 0.4 }}>
                   Tenta pesquisar por outro termo.
                 </p>
               </div>
@@ -96,7 +96,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
 
             {q && results.length > 0 && (
               <>
-                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.82rem', letterSpacing: '0.06em', opacity: 0.4, marginBottom: '32px', textTransform: 'uppercase' }}>
+                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-sm)', letterSpacing: '0.06em', opacity: 0.4, marginBottom: '32px', textTransform: 'uppercase' }}>
                   {results.length} resultado{results.length !== 1 ? 's' : ''} para &ldquo;{q}&rdquo;
                 </p>
 
@@ -128,7 +128,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
                         {product.onSale && (
                           <span
                             className="absolute top-3 left-3"
-                            style={{ backgroundColor: '#FFE394', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.7rem', padding: '3px 10px', borderRadius: '999px' }}
+                            style={{ backgroundColor: '#FFE394', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-2xs)', padding: '3px 10px', borderRadius: '999px' }}
                           >
                             Sale
                           </span>
@@ -137,7 +137,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
 
                       <p
                         className="line-clamp-2 mb-1"
-                        style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem', lineHeight: 1.3 }}
+                        style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', lineHeight: 1.3 }}
                       >
                         {product.name}
                       </p>
@@ -145,13 +145,13 @@ export default async function SearchPage({ searchParams }: PageProps) {
                       <div className="flex items-center gap-2 mt-auto pt-1">
                         {product.onSale && product.regularPrice && (
                           <span
-                            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.8rem', opacity: 0.35, textDecoration: 'line-through' }}
+                            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-xs)', opacity: 0.35, textDecoration: 'line-through' }}
                             dangerouslySetInnerHTML={{ __html: product.regularPrice }}
                           />
                         )}
                         {product.price && (
                           <span
-                            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem' }}
+                            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-base)' }}
                             dangerouslySetInnerHTML={{ __html: product.price }}
                           />
                         )}

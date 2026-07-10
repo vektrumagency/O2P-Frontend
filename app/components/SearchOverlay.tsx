@@ -129,19 +129,19 @@ export function SearchOverlay() {
         <div style={{ width: '90vw', paddingTop: '40px', paddingBottom: '40px' }}>
 
           {!query && (
-            <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.95rem', color: 'rgba(0,0,0,0.4)' }}>
+            <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-md)', color: 'rgba(0,0,0,0.4)' }}>
               Começa a escrever para pesquisar...
             </p>
           )}
 
           {loading && (
-            <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.95rem', color: 'rgba(0,0,0,0.4)' }}>
+            <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-md)', color: 'rgba(0,0,0,0.4)' }}>
               A pesquisar...
             </p>
           )}
 
           {!loading && query && results.length === 0 && (
-            <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.95rem', color: 'rgba(0,0,0,0.4)' }}>
+            <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-md)', color: 'rgba(0,0,0,0.4)' }}>
               Nenhum resultado para &ldquo;{query}&rdquo;
             </p>
           )}
@@ -181,12 +181,12 @@ export function SearchOverlay() {
                     </div>
                     <p
                       className="line-clamp-2 mb-1"
-                      style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem', color: '#0a0a0a', lineHeight: 1.3 }}
+                      style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', color: '#0a0a0a', lineHeight: 1.3 }}
                     >
                       {p.name}
                     </p>
                     {p.price && (
-                      <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem', color: '#0a0a0a' }}
+                      <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-sm)', color: '#0a0a0a' }}
                         dangerouslySetInnerHTML={{ __html: p.price }}
                       />
                     )}
@@ -197,7 +197,7 @@ export function SearchOverlay() {
               <button
                 onClick={handleGoToSearch}
                 className="flex items-center gap-2 mt-10 hover:opacity-60 transition-opacity"
-                style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem', color: '#0a0a0a' }}
+                style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-base)', color: '#0a0a0a' }}
               >
                 Ver todos os resultados para &ldquo;{query}&rdquo;
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

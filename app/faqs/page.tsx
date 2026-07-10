@@ -66,7 +66,7 @@ export default async function FAQsPage() {
         <div style={{ width: '90vw', maxWidth: 760, margin: '0 auto', paddingTop: '40px', paddingBottom: '80px' }}>
           <BackButton />
 
-          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(2rem, 4vw, 3.2rem)', marginBottom: '40px', lineHeight: 1 }}>
+          <h1 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-3xl)', marginBottom: '40px', lineHeight: 1 }}>
             Perguntas Frequentes
           </h1>
 

@@ -9,13 +9,13 @@ export function CartPageContent() {
   if (items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center" style={{ minHeight: '40vh', gap: '20px' }}>
-        <p style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'clamp(1.6rem, 3vw, 2.4rem)' }}>
+        <p style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-2xl)' }}>
           O teu carrinho está vazio.
         </p>
         <Link
           href="/"
           style={{
-            fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem',
+            fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-base)',
             backgroundColor: '#0a0a0a', color: '#FFE394',
             padding: '12px 28px', borderRadius: '999px',
             display: 'inline-block',
@@ -57,7 +57,7 @@ export function CartPageContent() {
               <Link href={`/product/${item.slug}`} className="hover:opacity-60 transition-opacity">
                 <p
                   className="line-clamp-2 mb-3"
-                  style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.95rem', lineHeight: 1.35 }}
+                  style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', lineHeight: 1.35 }}
                 >
                   {item.name}
                 </p>
@@ -69,17 +69,17 @@ export function CartPageContent() {
                   <button
                     onClick={() => updateQty(item.id, item.quantity - 1)}
                     className="hover:opacity-50 transition-opacity"
-                    style={{ padding: '4px 12px', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1rem' }}
+                    style={{ padding: '4px 12px', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-md)' }}
                   >
                     −
                   </button>
-                  <span style={{ padding: '4px 4px', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem', minWidth: 24, textAlign: 'center' }}>
+                  <span style={{ padding: '4px 4px', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-base)', minWidth: 24, textAlign: 'center' }}>
                     {item.quantity}
                   </span>
                   <button
                     onClick={() => updateQty(item.id, item.quantity + 1)}
                     className="hover:opacity-50 transition-opacity"
-                    style={{ padding: '4px 12px', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1rem' }}
+                    style={{ padding: '4px 12px', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-md)' }}
                   >
                     +
                   </button>
@@ -87,7 +87,7 @@ export function CartPageContent() {
 
                 {/* Preço unitário */}
                 <span
-                  style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem', opacity: 0.5 }}
+                  style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-base)', opacity: 0.5 }}
                   dangerouslySetInnerHTML={{ __html: item.price }}
                 />
               </div>
@@ -115,20 +115,20 @@ export function CartPageContent() {
         <div
           style={{ backgroundColor: '#FFE394', borderRadius: 24, padding: '32px 28px', position: 'sticky', top: 100 }}
         >
-          <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.6rem', marginBottom: 24 }}>
+          <h2 style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', marginBottom: 24 }}>
             Resumo
           </h2>
 
           <div className="flex justify-between items-center mb-6" style={{ borderBottom: '1px solid rgba(0,0,0,0.1)', paddingBottom: 16 }}>
-            <span style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem', opacity: 0.6 }}>
+            <span style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', opacity: 0.6 }}>
               Subtotal
             </span>
-            <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1rem' }}>
+            <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-md)' }}>
               {total}
             </span>
           </div>
 
-          <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.78rem', opacity: 0.45, marginBottom: 20 }}>
+          <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-xs)', opacity: 0.45, marginBottom: 20 }}>
             Portes de envio calculados no checkout.
           </p>
 
@@ -137,7 +137,7 @@ export function CartPageContent() {
             className="block text-center"
             style={{
               backgroundColor: '#0a0a0a', color: '#FFE394',
-              fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '1rem',
+              fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-md)',
               padding: '14px 24px', borderRadius: '999px',
             }}
           >
@@ -147,7 +147,7 @@ export function CartPageContent() {
           <Link
             href="/"
             className="block text-center mt-4 hover:opacity-50 transition-opacity"
-            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem', opacity: 0.45 }}
+            style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-sm)', opacity: 0.45 }}
           >
             Continuar a comprar
           </Link>

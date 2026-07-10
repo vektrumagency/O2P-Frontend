@@ -6,7 +6,7 @@ export function Footer() {
       <div className="flex justify-center py-12">
         <div style={{ width: '90vw' }} className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
           <div>
-            <p className="mb-5" style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.3rem', lineHeight: 1 }}>
+            <p className="mb-5" style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', lineHeight: 1 }}>
               Contacto
             </p>
             {[
@@ -17,20 +17,20 @@ export function Footer() {
                 key={link.label}
                 href={link.href}
                 className="block mb-2 hover:opacity-60 transition-opacity"
-                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '1rem' }}
+                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)' }}
               >
                 {link.label}
               </a>
             ))}
-            <p className="mt-2" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '1rem', opacity: 0.6 }}>
+            <p className="mt-2" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', opacity: 0.6 }}>
               Rua Prof. Manuel Cavaleiro Ferreira 4C
             </p>
-            <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '1rem', opacity: 0.6 }}>
+            <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', opacity: 0.6 }}>
               Apenas Loja Online
             </p>
           </div>
           <div>
-            <p className="mb-5" style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.3rem', lineHeight: 1 }}>
+            <p className="mb-5" style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', lineHeight: 1 }}>
               Links Úteis
             </p>
             {[
@@ -47,20 +47,20 @@ export function Footer() {
                 key={link.label}
                 href={link.href}
                 className="block mb-2 hover:opacity-60 transition-opacity"
-                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem' }}
+                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)' }}
               >
                 {link.label}
               </Link>
             ))}
           </div>
           <div>
-            <p className="mb-5" style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.3rem', lineHeight: 1 }}>
+            <p className="mb-5" style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', lineHeight: 1 }}>
               Informações
             </p>
             <Link
               href="/sobre-nos"
               className="block mb-2 hover:opacity-60 transition-opacity"
-              style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '1rem' }}
+              style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)' }}
             >
               Sobre Nós
             </Link>
@@ -72,21 +72,21 @@ export function Footer() {
                 key={link.label}
                 href={link.href}
                 className="block mb-2 hover:opacity-60 transition-opacity"
-                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '1rem' }}
+                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)' }}
               >
                 {link.label}
               </a>
             ))}
           </div>
           <div>
-            <p className="mb-5" style={{ fontFamily: 'var(--font-bricolage)', fontSize: '1.3rem', lineHeight: 1 }}>
+            <p className="mb-5" style={{ fontFamily: 'var(--font-bricolage)', fontSize: 'var(--text-xl)', lineHeight: 1 }}>
               Pagamento
             </p>
             {['MB WAY', 'Multibanco', 'Visa', 'Mastercard', 'PayPal'].map(method => (
               <span
                 key={method}
                 className="block mb-2"
-                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem' }}
+                style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)' }}
               >
                 {method}
               </span>
@@ -111,7 +111,7 @@ export function Footer() {
 
       <div className="flex justify-center py-5">
         <div style={{ width: '90vw' }}>
-          <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.75rem' }}>
+          <p style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-xs)' }}>
             © {new Date().getFullYear()} Order2Party
           </p>
         </div>

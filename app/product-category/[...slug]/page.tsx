@@ -93,7 +93,7 @@ function getPageRange(current: number, total: number): (number | '…')[] {
 function Pagination({ page, totalPages, sort }: { page: number; totalPages: number; sort: string }) {
   if (totalPages <= 1) return null
   const range = getPageRange(page, totalPages)
-  const btnStyle = { fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem', padding: '8px 16px', borderRadius: '999px', border: '1.5px solid rgba(0,0,0,0.12)' }
+  const btnStyle = { fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-sm)', padding: '8px 16px', borderRadius: '999px', border: '1.5px solid rgba(0,0,0,0.12)' }
 
   return (
     <div className="mt-14 pt-8" style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
@@ -104,7 +104,7 @@ function Pagination({ page, totalPages, sort }: { page: number; totalPages: numb
         ) : (
           <span style={{ ...btnStyle, opacity: 0.2 }}>← Anterior</span>
         )}
-        <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.82rem', opacity: 0.4 }}>
+        <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-sm)', opacity: 0.4 }}>
           {page} / {totalPages}
         </span>
         {page < totalPages ? (
@@ -123,11 +123,11 @@ function Pagination({ page, totalPages, sort }: { page: number; totalPages: numb
         )}
         {range.map((r, i) =>
           r === '…' ? (
-            <span key={`ellipsis-${i}`} style={{ padding: '8px 6px', opacity: 0.3, fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem' }}>…</span>
+            <span key={`ellipsis-${i}`} style={{ padding: '8px 6px', opacity: 0.3, fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-sm)' }}>…</span>
           ) : (
             <Link key={r} href={pageUrl(r, sort)}
               style={{
-                fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.85rem',
+                fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-sm)',
                 padding: '8px 14px', borderRadius: '999px', minWidth: 38, textAlign: 'center',
                 backgroundColor: r === page ? '#0a0a0a' : 'transparent',
                 color: r === page ? '#fff' : 'inherit',
@@ -164,21 +164,21 @@ function ProductCard({ product }: { product: Product }) {
         )}
         {product.onSale && (
           <span className="absolute top-3 left-3"
-            style={{ backgroundColor: '#FFE394', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.7rem', padding: '3px 10px', borderRadius: '999px' }}>
+            style={{ backgroundColor: '#FFE394', fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-2xs)', padding: '3px 10px', borderRadius: '999px' }}>
             Sale
           </span>
         )}
       </div>
-      <p className="line-clamp-2 mb-1" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.9rem', lineHeight: 1.3 }}>
+      <p className="line-clamp-2 mb-1" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-base)', lineHeight: 1.3 }}>
         {product.name}
       </p>
       <div className="flex items-center gap-2 mt-auto pt-1 flex-wrap">
         {product.onSale && product.regularPrice && (
-          <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.8rem', opacity: 0.35, textDecoration: 'line-through' }}
+          <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-xs)', opacity: 0.35, textDecoration: 'line-through' }}
             dangerouslySetInnerHTML={{ __html: product.regularPrice }} />
         )}
         {product.price && (
-          <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.9rem' }}
+          <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-base)' }}
             dangerouslySetInnerHTML={{ __html: product.price }} />
         )}
       </div>
@@ -243,7 +243,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
             {productCategory.name}
           </h1>
           {productCategory.count > 0 && (
-            <p className="mb-8" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.85rem', opacity: 0.4 }}>
+            <p className="mb-8" style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-sm)', opacity: 0.4 }}>
               {productCategory.count} produto{productCategory.count !== 1 ? 's' : ''}
             </p>
           )}
@@ -255,11 +255,11 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                 {sidebarParent && (
                   <Link href={`/product-category/${sidebarParent.slug}`}
                     className="flex items-center gap-1 mb-3 hover:opacity-60 transition-opacity"
-                    style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.78rem', opacity: 0.45 }}>
+                    style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-xs)', opacity: 0.45 }}>
                     ← {sidebarParent.name}
                   </Link>
                 )}
-                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.35, marginBottom: '10px' }}>
+                <p style={{ fontFamily: 'var(--font-fraktion-sans)', fontWeight: 700, fontSize: 'var(--text-2xs)', letterSpacing: '0.08em', textTransform: 'uppercase', opacity: 0.35, marginBottom: '10px' }}>
                   {sidebarParent ? 'Subcategorias' : 'Categorias'}
                 </p>
                 <nav className="flex flex-col">
@@ -269,7 +269,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                       href={`/product-category/${item.slug}`}
                       className="hover:opacity-60 transition-opacity"
                       style={{
-                        fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: '0.88rem',
+                        fontFamily: 'var(--font-secondary)', fontWeight: 700, fontSize: 'var(--text-sm)',
                         padding: '6px 0',
                         borderBottom: '1px solid rgba(0,0,0,0.06)',
                         opacity: item.slug === slug ? 1 : undefined,
@@ -278,7 +278,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                     >
                       {item.name}
                       {item.count > 0 && (
-                        <span style={{ fontSize: '0.75rem', opacity: 0.35, marginLeft: 6 }}>({item.count})</span>
+                        <span style={{ fontSize: 'var(--text-xs)', opacity: 0.35, marginLeft: 6 }}>({item.count})</span>
                       )}
                     </Link>
                   ))}
